@@ -17,7 +17,8 @@ I am create this repo for simple starter applications with basic code.
 The project was developed using the following technologies
 
 - [express](https://expressjs.com/)
-- [mongoose](https://mongoosejs.com/)
+- [sequelize](https://sequelize.org/)
+- [sqlite3](https://www.npmjs.com/package/sqlite3)
 - [passportjs](https://www.passportjs.org/)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [swagger](https://swagger.io/)
@@ -28,38 +29,42 @@ The project was developed using the following technologies
 
 ## You need add these files in root folder:
 
--jstConfig.js 
+-jstConfig.js
+
 ```
 module.exports = {
     secret: 'my-secret-word',
 }
 ```
 
--.env 
+-.env
+
 ```
-PORT=3000 
+PORT=3000
 ENV=development
 MONGO_URI=your_url_from_MongoDB
 ```
+
 ## Starting:
+
 Make sure you are in the project's root folder
 
 ### With Yarn
 
-```yarn```
+`yarn`
 
-``` yarn start```
+` yarn start`
 
-``` yarn test```
+` yarn test`
 
 ### With NPM
 
-```npm install```
+`npm install`
 
-``` npm run start```
+` npm run start`
 
-``` npm run test```
+` npm run test`
 
 ## :pencil: Author
 
-[<img src="https://avatars2.githubusercontent.com/u/38855507?s=400&u=20c80252e57c06227186be9761e67a20a82d3717&v=4" width=115><br><sub>Carlos Ziegler</sub>](https://github.com/carlosziegler) 
+[<img src="https://avatars2.githubusercontent.com/u/38855507?s=400&u=20c80252e57c06227186be9761e67a20a82d3717&v=4" width=115><br><sub>Carlos Ziegler</sub>](https://github.com/carlosziegler)
