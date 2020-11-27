@@ -42,7 +42,6 @@ module.exports = {
 ```
 PORT=3000
 ENV=development
-MONGO_URI=your_url_from_MongoDB
 ```
 
 ## Starting:
