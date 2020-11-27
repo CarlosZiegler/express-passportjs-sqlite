@@ -1,67 +1,33 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const swaggerUI = require('swagger-ui-express');
 const Cors = require('cors');
-const swaggerJsDoc = require('swagger-jsdoc');
-const dbConnection = require('./configs/db.config');
 const app = express();
-const routes = require('./routes')
+const AuthRoutes = require('./src/routes/AuthRoutes');
+const dbConnection = require('./src/database/configs/db.config');
+const { swaggerUI, swaggerDocs, options } = require('./src/docs/Swagger');
 
-require('./auth/auth');
+require('./src/auth/auth');
 
-const connectToMongo = async () => await dbConnection()
-connectToMongo();
-
-const swaggerOptions = {
-    swaggerDefinition: {
-        info: {
-            title: 'Title Project',
-            description: 'Description Project',
-            contact: {
-                name: 'Carlos Ziegler'
-            },
-            servers: ['http://localhost:3000']
-        }
-    },
-    apis: ["routes.js"]
+try {
+  dbConnection.authenticate();
+  console.log('Connection Database established.');
+} catch (error) {
+  console.log('Unable to connect to db: ', error);
 }
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions)
-
-const DisableTryItOutPlugin = function () {
-    return {
-        statePlugins: {
-            spec: {
-                wrapSelectors: {
-                    allowTryItOutFor: () => () => false
-                }
-            }
-        }
-    }
-}
-
-const options = {
-    swaggerOptions: {
-        plugins: [
-            DisableTryItOutPlugin
-        ]
-    }
-};
-
-app.use(Cors())
+app.use(Cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.json())
-app.use(routes)
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options))
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
+app.use('/auth', AuthRoutes);
 
 //Handle errors
 app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.json({ error: err });
+  res.status(err.status || 500);
+  res.json({ error: err });
 });
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('Server started')
+  console.log('Server started');
 });
